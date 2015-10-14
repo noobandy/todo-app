@@ -36,11 +36,8 @@ angular.module("ToDoApp").controller("ToDoController", ["$rootScope", "$scope", 
 			$scope.newToDoTitle = "";
 			todo.completed = false;
 			todo.userId = $rootScope.globals.authenticatedUser.id;
-
-			todo.$save(function() {
-
-				$scope.todos.unshift(todo);
-			})
+			$scope.todos.unshift(todo);
+			todo.$save();
 		};
 
 		$scope.complete = function(todo) {
@@ -50,10 +47,14 @@ angular.module("ToDoApp").controller("ToDoController", ["$rootScope", "$scope", 
 
 		};
 
+		$scope.changeTitle = function(todo) {
+			todo.$update();
+		};
+
 		$scope.delete = function(todo) {
-			todo.$delete(function() {
-				$scope.todos = ToDo.query({userId : $rootScope.globals.authenticatedUser.id});
-			});
+			var index = $scope.todos.indexOf(todo);
+			$scope.todos.splice(index, 1);   
+			todo.$delete();
 		};
 
 	}]);

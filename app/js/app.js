@@ -1,15 +1,16 @@
 "use strict";
 
 //ToDoApp module
-var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule"]);
+var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule","xeditable"]);
 
 ToDoApp.config(["localStorageServiceProvider", function(localStorageServiceProvider) {
 	localStorageServiceProvider.setPrefix("ToDoApp");
 }]);
 
 
-ToDoApp.run(["$rootScope", "AuthenticationManager","$state",
-	function($rootScope, AuthenticationManager, $state) {
+ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
+	function($rootScope, AuthenticationManager, $state,editableOptions) {
+		editableOptions.theme = "bs3";
 		//
 		if(AuthenticationManager.isAuthenticated()) {
 			$rootScope.globals = {

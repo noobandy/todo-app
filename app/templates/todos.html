@@ -6,8 +6,10 @@
 	</form>
 	<ul class="list-group">
 		<li data-ng-repeat="todo in todos" class="list-group-item">
-			<input type="checkbox" ng-click="complete(todo)">
-				<span data-ng-bind="todo.title"></span>
+			<input data-ng-if="todo.completed" type="checkbox" ng-model="todo.completed" ng-click="complete(todo)" disabled="disabled">
+			<input data-ng-if="!todo.completed" type="checkbox" ng-model="todo.completed" ng-click="complete(todo)">
+			<strike data-ng-if="todo.completed" data-ng-bind="todo.title"></strike>
+			<span data-ng-if="!todo.completed" data-editable-text="todo.title" onaftersave="changeTitle(todo)" data-ng-bind="todo.title"></span>	
 			<button data-ng-click="delete(todo)" href="#" class="close">&times</button>
 		</li>
 	</ul>
