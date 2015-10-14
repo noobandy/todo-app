@@ -28,3 +28,5 @@ node_modules
 
 #bower dependency directory
 bower_components
+
+.tmp
