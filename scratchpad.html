@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<title>Scratch Pad</title>
+  <!-- build:css css/todo-app.css -->
+  <link rel="stylesheet" type="text/css" href="app/css/bootstrap.css">
+  <!-- endbuild -->	
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3" data-ng-controller="UserFormController">
+			<form name="userForm" novalidate>
+				<div class="form-group" data-ng-class="{'has-error' : userForm.username.$error.required}">
+					<input class="form-control" type="text" required="" name="username" data-ng-model="username"/>
+					<span class="help-block">
+						{{username}}
+					</span>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- build:js js/todo-app.js -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <!-- endbuild -->
+
+  <script type="text/javascript">
+  	window.onload = function() {
+  		var MyApp = angular.module("MyApp", [/* has no dependecies*/]);
+  		
+  		angular.module("MyApp").controller("UserFormController", ["$scope", function($scope) {
+  			$scope.username = "Anand Mohan";
+  		}]);
+
+  		angular.bootstrap(document, ["MyApp"]);
+  	}
+  </script>
+</body>
+</html>
