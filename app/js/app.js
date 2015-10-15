@@ -21,10 +21,10 @@ ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
 			$rootScope.globals = { isAuthenticated : false , authenticatedUser : null};
 		}
 
-		$rootScope.$on("$authSuccess", function(event, authenticatedUser) {
+		$rootScope.$on("$authSuccess", function(event, data) {
 			$rootScope.globals = {
 				isAuthenticated : true,
-				authenticatedUser : authenticatedUser
+				authenticatedUser : data.authenticatedUser
 			}
 		});
 
