@@ -1,10 +1,18 @@
 <div class="col-lg-6">
 	<h1>ToDo</h1>
 	<h2 class="subtitle">Sign in to access ToDo app</h2>
-	<form class="form-inline signup" role="form">
-		<div class="form-group">
-			<input data-ng-model="username" type="text" class="form-control"  placeholder="Enter your username">
+
+	<form name="loginForm" class="form-inline signup" novalidate>
+
+		<div class="form-group" data-ng-class="{'has-error' : (loginForm.$submitted || loginForm.username.$touched ) && (loginForm.username.$error.required || loginModel.wrongCredentials)}">
+			<input name="username" required="" data-ng-model="loginModel.username" type="text" class="form-control"  placeholder="Enter your username">
+			</input>
+			<span data-ng-show="loginModel.wrongCredentials" class="help-block">
+				User not found
+			</span>
 		</div>
-		<button data-ng-click="signIn()"type="submit" class="btn btn-primary">Sign In</button>
+		<button data-ng-click="loginForm.$valid && signIn(loginModel)"type="submit" class="btn btn-primary">
+			Sign In
+		</button>
 	</form>
 </div>

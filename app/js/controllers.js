@@ -12,14 +12,16 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 angular.module("ToDoApp").controller("HomeController", ["$scope","User",
 	"$state","AuthenticationManager", 
 	function($scope, User, $state, AuthenticationManager) {
-		$scope.username = "";
-		$scope.loginError = false;
-		$scope.signIn = function() {
-			AuthenticationManager.authenticate($scope.username, function() {
-				$scope.loginError = false;
+
+		$scope.loginModel = { username : "", wrongCredentials : false};
+		
+		$scope.signIn = function(loginModel) {
+			loginModel.submitted = true;
+
+			AuthenticationManager.authenticate(loginModel.username, function() {
 				$state.go("todo page");
 			}, function() {
-				$scope.loginError = true;
+				loginModel.wrongCredentials = true;
 			});
 		}
 	}]);
@@ -28,16 +30,15 @@ angular.module("ToDoApp").controller("HomeController", ["$scope","User",
 angular.module("ToDoApp").controller("ToDoController", ["$rootScope", "$scope", "ToDo",
 	function($rootScope, $scope, ToDo) {
 		$scope.todos = ToDo.query({userId : $rootScope.globals.authenticatedUser.id});
-		$scope.newToDoTitle = "";
+		$scope.newToDo = new ToDo();
 
 		$scope.create = function() {
-			var todo = new ToDo();
-			todo.title = $scope.newToDoTitle;
-			$scope.newToDoTitle = "";
-			todo.completed = false;
-			todo.userId = $rootScope.globals.authenticatedUser.id;
-			$scope.todos.unshift(todo);
-			todo.$save();
+			
+			$scope.newToDo.completed = false;
+			$scope.newToDo.userId = $rootScope.globals.authenticatedUser.id;
+			$scope.todos.unshift($scope.newToDo);
+			$scope.newToDo.$save();
+			$scope.newToDo = new ToDo();
 		};
 
 		$scope.complete = function(todo) {
