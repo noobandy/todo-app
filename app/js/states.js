@@ -23,5 +23,23 @@ angular.module("ToDoApp").config(["$stateProvider", "$urlRouterProvider",
       data : {
         isSecure : true
       }
+    }).state("something went wrong", {
+      url : "/500",
+      templateUrl: "app/templates/500.html",
+      data: {
+        isSecure : false
+      }
+    }).state("not found", {
+      url : "/404",
+      templateUrl: "app/templates/404.html",
+      data: {
+        isSecure : false
+      }
+    }).state("about page", {
+      url: "/about",
+      templateUrl : "app/templates/about.html",
+      data : {
+        isSecure : false
+      }
     });
 }]);

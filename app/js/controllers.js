@@ -7,6 +7,10 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 			AuthenticationManager.signOut();
 			$state.go("home page");
 		}
+
+		$scope.about = function() {
+			
+		}
 	}]);
 
 angular.module("ToDoApp").controller("HomeController", ["$scope","User",

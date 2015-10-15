@@ -3,9 +3,11 @@
 //ToDoApp module
 var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule","xeditable"]);
 
-ToDoApp.config(["localStorageServiceProvider", function(localStorageServiceProvider) {
-	localStorageServiceProvider.setPrefix("ToDoApp");
-}]);
+ToDoApp.config(["localStorageServiceProvider","$httpProvider",
+	function(localStorageServiceProvider, $httpProvider) {
+		localStorageServiceProvider.setPrefix("ToDoApp");
+		$httpProvider.interceptors.push("ServerErrorInterceptor");
+	}]);
 
 
 ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
