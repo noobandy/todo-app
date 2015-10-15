@@ -22,6 +22,16 @@ angular.module("ToDoApp").config(["$stateProvider", "$urlRouterProvider",
       controller: "ToDoController",
       data : {
         isSecure : true
+      },
+      resolve : {
+        todos : ["ToDo", "$rootScope",
+        function(ToDo, $rootScope) {
+          return ToDo.query({
+            userId : $rootScope.globals.authenticatedUser.id
+          }).$promise.then(function(result) {
+            return result;
+          });
+        }]
       }
     }).state("something went wrong", {
       url : "/500",

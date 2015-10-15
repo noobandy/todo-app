@@ -4,6 +4,7 @@
 	<title>To Do</title>
   <!-- build:css css/todo-app.css -->
   <link rel="stylesheet" type="text/css" href="app/css/bootstrap.css">
+   <link rel="stylesheet" type="text/css" href="app/css/style.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-xeditable/dist/css/xeditable.css">
   <!-- endbuild -->
 
@@ -15,6 +16,7 @@
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
   <script type="text/javascript" src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+  <script type="text/javascript" src="app/js/elevator.js"></script>
   <script type="text/javascript" src="app/js/app.js"></script>
   <script type="text/javascript" src="app/js/controllers.js"></script>
   <script type="text/javascript" src="app/js/services.js"></script>
@@ -53,10 +55,13 @@
     </div>
   </div>
 </nav>
+<img class="loader" data-ng-show="globals.showLoader" data-ng-src="app/img/loader.gif"/>
 <div class="container">
 	<div class="row" data-ui-view>
 			
 	</div>
+  <to-do-elevator>
+  </to-do-elevator>
 </div>	
 </body>
 </html>

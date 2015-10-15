@@ -16,3 +16,18 @@ angular.module("ToDoApp").directive("toDoEnter", function() {
 		}
 	}
 });
+
+angular.module("ToDoApp").directive("toDoElevator", function() {
+	return {
+		restrict : "E",
+		template: '<div class="btn btn-primary pull-right"> <i class="glyphicon glyphicon-arrow-up"></i></div>',
+		scope : {
+		},
+		link : function(scope, element, attrs) {
+			element.click(function() {
+				$("html, body").animate({ scrollTop: 0 }, "slow");
+				return false;
+			})
+		}
+	}
+});

@@ -9,7 +9,7 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 		}
 
 		$scope.about = function() {
-			
+
 		}
 	}]);
 
@@ -32,8 +32,9 @@ angular.module("ToDoApp").controller("HomeController", ["$scope","User",
 
 
 angular.module("ToDoApp").controller("ToDoController", ["$rootScope", "$scope", "ToDo",
-	function($rootScope, $scope, ToDo) {
-		$scope.todos = ToDo.query({userId : $rootScope.globals.authenticatedUser.id});
+	"todos",
+	function($rootScope, $scope, ToDo, todos) {
+		$scope.todos = todos;
 		$scope.newToDo = new ToDo();
 
 		$scope.create = function() {
