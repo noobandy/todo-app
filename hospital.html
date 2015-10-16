@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+	<title>Scratch Pad</title>
+  <!-- 
+  http://blog.xebia.com/2014/02/23/promises-and-design-patterns-in-angularjs/#top
+-->
+  <!-- build:css css/todo-app.css -->
+  <link rel="stylesheet" type="text/css" href="app/css/bootstrap.css">
+   <link rel="stylesheet" type="text/css" href="app/css/style.css">
+  <!-- endbuild -->	
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3" data-ng-controller="HospitalFinderController">
+      <img ng-if="showLoader" class="loader" data-ng-src="app/img/loader.gif">
+      <span ng-if="model.hasError" data-ng-bind="model.error">
+      </span>
+      <table data-ng-if="!model.hasError">
+        <thead>
+          <tr>
+            <th>
+              Name
+            </th>
+            <th>
+              Vicinity
+            </th>
+            <th>
+              Location
+            </th>
+          </tr>
+          <tbody>
+            <tr>
+              <td data-ng-bind="model.hospital.name"></td>
+              <td data-ng-bind="model.hospital.vicinity"></td>
+              <td data-ng-bind="model.hospital.location"></td>
+            </tr>
+          </tbody>
+        </thead>
+      </table>
+		</div>
+	</div>
+</div>
+<!-- build:js js/todo-app.js -->
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-resource/angular-resource.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <!-- endbuild -->
+
+  <script type="text/javascript">
+  	window.onload = function() {
+  		var HospitalFinderApp = angular.module("HospitalFinderApp", [/* has no dependecies*/]);
+  		
+  		angular.module("HospitalFinderApp").controller("HospitalFinderController",
+        ["$scope","Hospitals",
+        function($scope, Hospitals) {
+          $scope.showLoader = true;
+          $scope.model = {
+            hospital : {},
+            hasError : false,
+            error : ""
+          };
+
+          
+          Hospitals.getHospitals().then(function(result) {
+            $scope.showLoader = false;
+
+            $scope.model.hospital = result;
+
+          }, function(error) {
+            $scope.showLoader = false;
+            $scope.model.hasError = true;
+            $scope.model.error = error;
+          });
+
+        }]);
+
+     angular.module("HospitalFinderApp").service("Location",["$q",
+        function($q){
+          this.getLocation = function(){
+            var deferred = $q.defer();
+
+            if(navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                deferred.resolve({
+                  latitude : position.coords.latitude,
+                  longitude : position.coords.longitude
+                });
+
+              });
+            } else {
+              deferred.reject("location api not supported");
+            }
+            
+
+            return deferred.promise;
+          }
+        }]);
+
+      angular.module("HospitalFinderApp").service("GooglePlaces",["$http",
+        function($http){
+          this.getNearestPlaceOfType = function(latitude, longitude, type){
+            
+            return $http.get("https://maps.googleapis.com/maps/api/place/search/json?location="+latitude+","+longitude+"&rankby=distance&sensor=true&type="+type+"&key=AIzaSyD4HHBkgVlVUq2VraBi7Cc8spO-LRMBvPc").then(function(result) {
+              if(result.results.length > 0) {
+                var response = {};
+                var firstPlace = result.results[0];
+                response.id = firstPlace.id;
+                response.name = firstPlace.name;
+                response.location = firstPlace.location;
+                response.vicinity = firstPlace.vicinity;
+
+                return response;
+              } else {
+               return "no "+type+" found";
+              }
+            }, function(error) {
+             return "no "+type+" found";
+            });
+          }
+        }]);
+
+
+
+      angular.module("HospitalFinderApp").factory("Hospitals",
+        ["Location", "GooglePlaces",
+        function(Location, GooglePlaces) {
+          return {
+            getHospitals : function() {
+               return Location.getLocation().then(function(result){
+                GooglePlaces.getNearestPlaceOfType(result.latitude, result.longitude, "hospital").
+                then(function(result) {
+                 return result;
+                }, function(error) {
+                    return error;
+                })
+               }, function(error) {
+                return error;
+               });
+            }
+          }
+        }]);
+
+  		angular.bootstrap(document, ["HospitalFinderApp"]);
+  	}
+  </script>
+</body>
+</html>

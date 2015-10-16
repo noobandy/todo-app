@@ -15,6 +15,12 @@ angular.module("ToDoApp").config(["$stateProvider", "$urlRouterProvider",
       data : {
         isSecure : false
       }
+    }).state('temp page', {
+      url: "/temp",
+      template: "app/templates/home.html",
+      data : {
+        isSecure : false
+      }
     })
     .state('todo page', {
       url: "/todos",

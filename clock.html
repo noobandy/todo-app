@@ -1,7 +1,10 @@
 <!doctype html>
 <html>
 <head>
-	<title>Scratch Pad</title>
+	<title>Clock</title>
+  <!-- 
+  http://blog.xebia.com/2014/02/23/promises-and-design-patterns-in-angularjs/#top
+-->
   <!-- build:css css/todo-app.css -->
   <link rel="stylesheet" type="text/css" href="app/css/bootstrap.css">
   <!-- endbuild -->	
@@ -9,15 +12,9 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col-md-6 col-md-offset-3" data-ng-controller="UserFormController">
-			<form name="userForm" novalidate>
-				<div class="form-group" data-ng-class="{'has-error' : userForm.username.$error.required}">
-					<input class="form-control" type="text" required="" name="username" data-ng-model="username"/>
-					<span class="help-block">
-						{{username}}
-					</span>
-				</div>
-			</form>
+		<div class="col-md-6 col-md-offset-3">
+      <data-my-app-clock>
+      </data-my-app-clock>
 		</div>
 	</div>
 </div>
@@ -32,23 +29,26 @@
   <script type="text/javascript">
   	window.onload = function() {
   		var MyApp = angular.module("MyApp", [/* has no dependecies*/]);
-  		
-  		MyApp.controller("UserFormController", ["$scope",
-        "AsyncMagic",
-        function($scope, AsyncMagic) {
-          $scope.username = "Anand";
-          /*AsyncMagic.then(function(result){
-            $scope.username = result;
-          });*/
+      angular.module("MyApp").directive("myAppClock", ["$interval", 
+        function($interval) {
+        return {
+          restrict : "E",
+          template : '<form> <div class="form-group"> <input type="text" data-ng-model="format"> <span class="help-block">{{time | date : format}}</span> </div> </form>',
+          scope : {
+          },
+          link : function(scope, element, attrs) {
+            scope.format = "medium";
+            scope.time = new Date();
+            var intervalId = $interval(function() {
+              scope.time = new Date();
+            }, 1000);
 
-        }]);
+            element.on("$destroy", function() {
+               $interval.cancel(intervalId);
+            });
 
-      angular.module("MyApp").factory("AsyncMagic", ["$q", function($q) {
-        var deferred = $q.defer();
-        setTimeout(function() {
-          deferred.resolve("Magic");
-        }, 10000);
-        return deferred.promise;
+          }
+        }
       }]);
 
   		angular.bootstrap(document, ["MyApp"]);

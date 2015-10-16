@@ -8,9 +8,7 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 			$state.go("home page");
 		}
 
-		$scope.about = function() {
-
-		}
+		
 	}]);
 
 angular.module("ToDoApp").controller("HomeController", ["$scope","User",
@@ -20,7 +18,6 @@ angular.module("ToDoApp").controller("HomeController", ["$scope","User",
 		$scope.loginModel = { username : "", wrongCredentials : false};
 		
 		$scope.signIn = function(loginModel) {
-			loginModel.submitted = true;
 
 			AuthenticationManager.authenticate(loginModel.username, function() {
 				$state.go("todo page");
