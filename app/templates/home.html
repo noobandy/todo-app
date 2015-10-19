@@ -1,18 +1,18 @@
 <div class="col-lg-6">
-	<h1>ToDo</h1>
-	<h2 class="subtitle">Sign in to access ToDo app</h2>
+	<h1>{{'app.name' | translate}}</h1>
+	<h2 class="subtitle">{{'home.signInMessage' | translate}}</h2>
 
 	<form name="loginForm" class="form-inline signup" novalidate>
 
 		<div class="form-group" data-ng-class="{'has-error' : (loginForm.$submitted || loginForm.username.$touched ) && (loginForm.username.$error.required || loginModel.wrongCredentials)}">
-			<input name="username" required="" data-ng-model="loginModel.username" type="text" class="form-control"  placeholder="Enter your username">
+			<input name="username" required="" data-ng-model="loginModel.username" type="text" class="form-control"  placeholder="{{'home.username' | translate}}">
 			</input>
 			<span data-ng-show="loginModel.wrongCredentials" class="help-block">
-				User not found
+				{{'home.userNotFound' | translate:loginModel}}
 			</span>
 		</div>
 		<button data-ng-click="loginForm.$valid && signIn(loginModel)"type="submit" class="btn btn-primary">
-			Sign In
+			{{'home.signIn' | translate}}
 		</button>
 	</form>
 </div>

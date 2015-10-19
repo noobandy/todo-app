@@ -1,0 +1,12 @@
+{
+	"app.name": "टूडू",
+	"app.language": "भाषा",
+	"app.language.english": "अंग्रेज़ी",
+	"app.language.hindi": "हिंदी",
+	"home.signOut": "साइन आउट",
+	"home.about": "हमारे बारे में",
+	"home.signIn": "साइन इन करें",
+	"home.username" : "उपयोगकर्ता नाम",
+	"home.userNotFound": "उपयोगकर्ता {{username}} नहीं मिला",
+	"home.signInMessage": "टूडू एप्लिकेशन में साइन इन करें"
+}

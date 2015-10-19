@@ -1,7 +1,8 @@
 "use strict";
 
 //ToDoApp module
-var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule","xeditable"]);
+var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule","xeditable",
+	"pascalprecht.translate"]);
 
 ToDoApp.config(["localStorageServiceProvider","$httpProvider",
 	function(localStorageServiceProvider, $httpProvider) {
@@ -9,6 +10,18 @@ ToDoApp.config(["localStorageServiceProvider","$httpProvider",
 		$httpProvider.interceptors.push("ServerErrorInterceptor");
 	}]);
 
+
+ToDoApp.config(['$translateProvider', function ($translateProvider) {
+
+  $translateProvider.useStaticFilesLoader({
+    files: [{
+        prefix: 'app/languages/',
+        suffix: '.json'
+    }]
+});
+ 
+  $translateProvider.preferredLanguage('en');
+}]);
 
 ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
 	function($rootScope, AuthenticationManager, $state,editableOptions) {

@@ -25,6 +25,8 @@
     "bootstrap": "~3.3.5",
     "angular-resource": "~1.4.7",
     "angular-local-storage": "~0.2.3",
-    "angular-xeditable": "~0.1.9"
+    "angular-xeditable": "~0.1.9",
+    "angular-translate": "~2.8.1",
+    "angular-translate-loader-static-files": "~2.8.1"
   }
 }

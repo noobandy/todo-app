@@ -1,0 +1,12 @@
+{
+	"app.name": "ToDo",
+	"app.language": "Language",
+	"app.language.english": "English",
+	"app.language.hindi": "Hindi",
+	"home.signOut": "Sign out",
+	"home.about": "About us",
+	"home.signIn":"Sign in",
+	"home.username" : "Username",
+	"home.userNotFound": "User {{username}} not found",
+	"home.signInMessage": "Sign in to access ToDo app"
+}

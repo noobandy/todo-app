@@ -1,11 +1,15 @@
 "use strict";
 
 angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
-	"AuthenticationManager", "$state","$scope",
-	function($rootScope, AuthenticationManager, $state, $scope) {
+	"AuthenticationManager", "$state","$scope", "$translate",
+	function($rootScope, AuthenticationManager, $state, $scope, $translate) {
 		$scope.signOut = function() {
 			AuthenticationManager.signOut();
 			$state.go("home page");
+		}
+
+		$scope.changeLanguage = function(locale) {
+			$translate.use(locale);
 		}
 
 		
