@@ -7,8 +7,11 @@
 		<div class="form-group" data-ng-class="{'has-error' : (loginForm.$submitted || loginForm.username.$touched ) && (loginForm.username.$error.required || loginModel.wrongCredentials)}">
 			<input name="username" required="" data-ng-model="loginModel.username" type="text" class="form-control"  placeholder="{{'home.username' | translate}}">
 			</input>
-			<span data-ng-show="loginModel.wrongCredentials" class="help-block">
+			<span data-ng-show="loginModel.wrongCredentials && loginModel.failedCount <= 1" class="help-block">
 				{{'home.userNotFound' | translate:loginModel}}
+			</span>
+				<span data-ng-show="loginModel.wrongCredentials && loginModel.failedCount > 1" class="help-block">
+				{{'home.userNotFoundHumour' | translate:loginModel}}
 			</span>
 		</div>
 		<button data-ng-click="loginForm.$valid && signIn(loginModel)"type="submit" class="btn btn-primary">

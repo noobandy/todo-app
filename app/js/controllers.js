@@ -19,13 +19,14 @@ angular.module("ToDoApp").controller("HomeController", ["$scope","User",
 	"$state","AuthenticationManager", 
 	function($scope, User, $state, AuthenticationManager) {
 
-		$scope.loginModel = { username : "", wrongCredentials : false};
-		
+		$scope.loginModel = { username : "", wrongCredentials : false, failedCount : 0};
+
 		$scope.signIn = function(loginModel) {
 
 			AuthenticationManager.authenticate(loginModel.username, function() {
 				$state.go("todo page");
 			}, function() {
+				loginModel.failedCount = loginModel.failedCount + 1;
 				loginModel.wrongCredentials = true;
 			});
 		}

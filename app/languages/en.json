@@ -8,5 +8,6 @@
 	"home.signIn":"Sign in",
 	"home.username" : "Username",
 	"home.userNotFound": "User {{username}} not found",
+	"home.userNotFoundHumour": "Go home you seem drunk!",
 	"home.signInMessage": "Sign in to access ToDo app"
 }

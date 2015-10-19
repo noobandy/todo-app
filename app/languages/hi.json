@@ -8,5 +8,6 @@
 	"home.signIn": "साइन इन करें",
 	"home.username" : "उपयोगकर्ता नाम",
 	"home.userNotFound": "उपयोगकर्ता {{username}} नहीं मिला",
+	"home.userNotFoundHumour": "तुम नशे में लग रहे हैं घर जाओ!",
 	"home.signInMessage": "टूडू एप्लिकेशन में साइन इन करें"
 }
