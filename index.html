@@ -4,7 +4,8 @@
 	<title>To Do</title>
   <!-- build:css css/todo-app.css -->
   <link rel="stylesheet" type="text/css" href="app/css/bootstrap.css">
-   <link rel="stylesheet" type="text/css" href="app/css/style.css">
+  <link rel="stylesheet" type="text/css" href="app/css/style.css">
+  <link rel="stylesheet" type="text/css" href="bower_components/angular-loading-bar/build/loading-bar.css">
   <link rel="stylesheet" type="text/css" href="bower_components/angular-xeditable/dist/css/xeditable.css">
   <!-- endbuild -->
 
@@ -17,6 +18,8 @@
   <script type="text/javascript" src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
   <script type="text/javascript" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+   <script type="text/javascript" src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
+  <script type="text/javascript" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script> 
   <script type="text/javascript" src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
   <script type="text/javascript" src="app/js/elevator.js"></script>
   <script type="text/javascript" src="app/js/app.js"></script>
@@ -30,7 +33,7 @@
 	
 </head>
 <body data-ng-app="ToDoApp">
-	<nav data-ng-controller="NavbarController" class="navbar navbar-inverse">
+	<nav data-ng-controller="NavbarController" class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
@@ -49,7 +52,7 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
       <ul class="nav navbar-nav navbar-right">
-         <li class="dropdown open">
+         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">{{'app.language' | translate}} <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#" data-ng-click="changeLanguage('en')">{{'app.language.english' | translate}}</a></li>
@@ -64,7 +67,6 @@
     </div>
   </div>
 </nav>
-<img class="loader" data-ng-show="globals.showLoader" data-ng-src="app/img/loader.gif"/>
 <div class="container">
 	<div class="row" data-ui-view>
 			

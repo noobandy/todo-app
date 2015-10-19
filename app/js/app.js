@@ -2,7 +2,7 @@
 
 //ToDoApp module
 var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule","xeditable",
-	"pascalprecht.translate"]);
+	"pascalprecht.translate", "angular-loading-bar"]);
 
 ToDoApp.config(["localStorageServiceProvider","$httpProvider",
 	function(localStorageServiceProvider, $httpProvider) {
@@ -12,16 +12,24 @@ ToDoApp.config(["localStorageServiceProvider","$httpProvider",
 
 
 ToDoApp.config(['$translateProvider', function ($translateProvider) {
-
-  $translateProvider.useStaticFilesLoader({
-    files: [{
-        prefix: 'app/languages/',
-        suffix: '.json'
-    }]
-});
- 
-  $translateProvider.preferredLanguage('en');
+	$translateProvider.useStaticFilesLoader({
+		files: [{
+			prefix: 'app/languages/',
+			suffix: '.json'
+		}]
+	});
+	$translateProvider.preferredLanguage('en');
+	$translateProvider.fallbackLanguage('en');
 }]);
+
+ToDoApp.config(["cfpLoadingBarProvider", function(cfpLoadingBarProvider) {
+	cfpLoadingBarProvider.spinnerTemplate = '<div id="pluswrap">\
+	<div class="plus">\
+	<img src="app/img/loader.gif">\
+	</div>\
+	</div>';
+
+}])
 
 ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
 	function($rootScope, AuthenticationManager, $state,editableOptions) {
@@ -59,7 +67,7 @@ ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
 		$rootScope.$on("$stateChangeStart",
 			function(event, toState, toParams, fromState, fromParams) {
 				
-				$rootScope.globals.showLoader = true;
+				//$rootScope.globals.showLoader = true;
 
 				if(toState.data.isSecure) {
 					if(!$rootScope.globals.isAuthenticated) {
@@ -76,7 +84,7 @@ ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
 
 		$rootScope.$on("$stateChangeSuccess",
 			function(event) {
-				$rootScope.globals.showLoader = false;
+				//$rootScope.globals.showLoader = false;
 			});
 
 	}]);
