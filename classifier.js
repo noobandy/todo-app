@@ -2,6 +2,10 @@ var natural = require('natural');
 
 var classifier = new natural.BayesClassifier();
 
+var metaphone = natural.Metaphone;
+
+metaphone.attach();
+
 var fs = require("fs");
 
 var path = require("path");
@@ -12,8 +16,13 @@ natural.PorterStemmer.attach();
 
 for(prop in corpus) {
 	for(var i = 0; i < corpus[prop].length; i++) {
+		var stems = corpus[prop][i].tokenizeAndStem();
 
-		classifier.addDocument(corpus[prop][i].tokenizeAndStem(), prop);
+		//var phonetics = corpus[prop][i].tokenizeAndPhoneticize();
+		
+		//var document = stems.concat(phonetics);
+
+		classifier.addDocument(stems, prop);
 	}
 }
 
@@ -23,6 +32,7 @@ module.exports = {};
 
 module.exports.classify = function(input) {
 	var classifications = classifier.getClassifications(input);
+	console.log(classifications);
 	if(classifications.length > 0) {
 		return classifications[0].label;
 	} else {

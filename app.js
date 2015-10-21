@@ -4,6 +4,7 @@ var jade = require("jade");
 
 var index = require(path.join(__dirname, "./routes/index.js"));
 var pages = require(path.join(__dirname, "./routes/pages.js"));
+var ais = require(path.join(__dirname, "./routes/ais.js"));
 
 var app = new express();
 
@@ -25,6 +26,9 @@ app.use("/bower_components", express.static(path.join(__dirname,"bower_component
 app.use("", index);
 
 app.use("/pages", pages);
+
+app.use("/ais", ais);
+
 
 
 var server = app.listen(8000, function () {

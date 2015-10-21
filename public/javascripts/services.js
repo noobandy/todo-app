@@ -35,3 +35,9 @@ angular.module("ToDoApp").service("AuthenticationManager", [ "User",
 			}
 		};
 	}]);
+
+angular.module("ToDoApp").service("NLCommandService", ["$http", function($http) {
+	this.getState = function(command) {
+		return $http.get("/ais/classify?input="+command);
+	}
+}]);

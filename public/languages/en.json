@@ -3,6 +3,7 @@
 	"app.language": "Language",
 	"app.language.english": "English",
 	"app.language.hindi": "Hindi",
+	"app.nlCommandPlaceHolder" : "command",
 	"home.signOut": "Sign out",
 	"home.about": "About us",
 	"home.signIn":"Sign in",
