@@ -2,7 +2,9 @@
 
 angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 	"AuthenticationManager", "$state","$scope", "$translate","NLCommandService",
-	function($rootScope, AuthenticationManager, $state, $scope, $translate, NLCommandService) {
+	"$timeout",
+	function($rootScope, AuthenticationManager, $state, $scope, $translate, NLCommandService,
+		$timeout) {
 		$scope.signOut = function() {
 			AuthenticationManager.signOut();
 			$state.go("home page");
@@ -32,7 +34,12 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 			recognition.onresult = function(event) { 
 				console.log(event.results[event.resultIndex][event.resultIndex].transcript);
 				$scope.command = event.results[event.resultIndex][event.resultIndex].transcript;
-				$scope.run();
+				$scope.$apply();
+				//introduce 1 sec delay so that user can see what he said
+				$timeout(function() {
+					$scope.run();
+				},1000);
+				
 			}
 			recognition.start();
 		}
