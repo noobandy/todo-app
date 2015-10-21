@@ -31,6 +31,7 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 
 		$scope.microphone = function() {
 			var recognition = new webkitSpeechRecognition();
+			recognition.lang = "en-GB";
 			recognition.onresult = function(event) { 
 				console.log(event.results[event.resultIndex][event.resultIndex].transcript);
 				$scope.command = event.results[event.resultIndex][event.resultIndex].transcript;
