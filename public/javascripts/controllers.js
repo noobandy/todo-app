@@ -12,7 +12,10 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 			$translate.use(locale);
 		}
 
+
 		$scope.command = "";
+		
+
 		$scope.run = function() {
 			NLCommandService.getState($scope.command).then(function(response) {
 				console.log(response);
@@ -22,6 +25,16 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 				console.log(error);
 			})
 			
+		}
+
+		$scope.microphone = function() {
+			var recognition = new webkitSpeechRecognition();
+			recognition.onresult = function(event) { 
+				console.log(event.results[event.resultIndex][event.resultIndex].transcript);
+				$scope.command = event.results[event.resultIndex][event.resultIndex].transcript;
+				$scope.run();
+			}
+			recognition.start();
 		}
 
 
