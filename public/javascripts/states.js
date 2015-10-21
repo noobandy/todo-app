@@ -10,21 +10,21 @@ angular.module("ToDoApp").config(["$stateProvider", "$urlRouterProvider",
   $stateProvider
     .state('home page', {
       url: "/",
-      templateUrl: "app/templates/home.html",
+      templateUrl: "/public/templates/home.html",
       controller : "HomeController",
       data : {
         isSecure : false
       }
     }).state('temp page', {
       url: "/temp",
-      template: "app/templates/home.html",
+      template: "/public/templates/home.html",
       data : {
         isSecure : false
       }
     })
     .state('todo page', {
       url: "/todos",
-      templateUrl: "app/templates/todos.html",
+      templateUrl: "/public/templates/todos.html",
       controller: "ToDoController",
       data : {
         isSecure : true
@@ -41,19 +41,19 @@ angular.module("ToDoApp").config(["$stateProvider", "$urlRouterProvider",
       }
     }).state("something went wrong", {
       url : "/500",
-      templateUrl: "app/templates/500.html",
+      templateUrl: "/public/templates/500.html",
       data: {
         isSecure : false
       }
     }).state("not found", {
       url : "/404",
-      templateUrl: "app/templates/404.html",
+      templateUrl: "/public/templates/404.html",
       data: {
         isSecure : false
       }
     }).state("about page", {
       url: "/about",
-      templateUrl : "app/templates/about.html",
+      templateUrl : "/public/templates/about.html",
       data : {
         isSecure : false
       }

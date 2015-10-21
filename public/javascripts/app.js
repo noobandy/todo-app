@@ -14,7 +14,7 @@ ToDoApp.config(["localStorageServiceProvider","$httpProvider",
 ToDoApp.config(['$translateProvider', function ($translateProvider) {
 	$translateProvider.useStaticFilesLoader({
 		files: [{
-			prefix: 'app/languages/',
+			prefix: '/public/languages/',
 			suffix: '.json'
 		}]
 	});
@@ -25,7 +25,7 @@ ToDoApp.config(['$translateProvider', function ($translateProvider) {
 ToDoApp.config(["cfpLoadingBarProvider", function(cfpLoadingBarProvider) {
 	cfpLoadingBarProvider.spinnerTemplate = '<div id="pluswrap">\
 	<div class="plus">\
-	<img src="app/img/loader.gif">\
+	<img src="/public/images/loader.gif">\
 	</div>\
 	</div>';
 

@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install",
-    "start": "http-server -a localhost -p 8000 -c-1 -d false -i true -o",
+    "start": "node app.js",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
@@ -41,6 +41,7 @@
     "grunt-usemin": "^3.1.1"
   },
   "dependencies": {
+    "express": "^4.13.3",
     "natural": "^0.2.1"
   }
 }
