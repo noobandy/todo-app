@@ -16,17 +16,16 @@ natural.PorterStemmer.attach();
 
 for(prop in corpus) {
 	for(var i = 0; i < corpus[prop].length; i++) {
-		var stems = corpus[prop][i].tokenizeAndStem();
 
-		//var phonetics = corpus[prop][i].tokenizeAndPhoneticize();
-		
-		//var document = stems.concat(phonetics);
-
-		classifier.addDocument(stems, prop);
+		classifier.addDocument(corpus[prop][i], prop);
 	}
 }
 
 classifier.train();
+
+classifier.save("classifier.json", function(err, classifier) {
+	console.log("classifier saved");
+});
 
 module.exports = {};
 
