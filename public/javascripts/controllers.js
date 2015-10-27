@@ -136,6 +136,8 @@ angular.module("ToDoApp").controller("ChatController", ["$rootScope", "$scope",
 
 
 		$scope.newChat = function(user) {
+			//clear
+			$scope.openChatWindows = [];
 			$scope.openChatWindows.push({
 				title : user.username,
 				messages : []
@@ -147,8 +149,11 @@ angular.module("ToDoApp").controller("ChatController", ["$rootScope", "$scope",
 		};
 
 		$scope.closeChatWindow = function(chatWindow) {
-			var index = $scope.openChatWindows.indexOf(chatWindow);
-			$scope.openChatWindows.splice(index, 1);
+		/*	var index = $scope.openChatWindows.indexOf(chatWindow);
+			$scope.openChatWindows.splice(index, 1);*/
+			//clear
+			$scope.openChatWindows = [];
+			
 		};
 
 		$scope.postMessage = function(chatWindow) {

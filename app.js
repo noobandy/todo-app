@@ -6,8 +6,10 @@ var pages = require(path.join(__dirname, "./routes/pages.js"));
 var ais = require(path.join(__dirname, "./routes/ais.js"));
 var heartbeat = require(path.join(__dirname, "./routes/heartbeat.js"));
 var chat = require(path.join(__dirname, "./routes/chat.js"));
+var OnlineUserCron = require(path.join(__dirname, "./models/OnlineUserCron.js"));
 
-/*var mongoose = require("mongoose");
+
+var mongoose = require("mongoose");
 
 var dbConfig = require(path.join(__dirname, "./config/config.js")).dev.db;
 
@@ -31,7 +33,7 @@ process.on('SIGINT', function() {
     process.exit(0); 
   }); 
 }); 
-*/
+
 
 var app = new express();
 
@@ -65,6 +67,15 @@ app.use("/chat", chat);
 var server = app.listen(8000, function () {
   var host = server.address().address;
   var port = server.address().port;
-
+  OnlineUserCron.start();
   console.log('ToDo app listening at http://%s:%s', host, port);
+});
+
+var io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
