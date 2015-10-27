@@ -100,3 +100,68 @@ angular.module("ToDoApp").controller("ToDoController", ["$rootScope", "$scope", 
 		};
 
 	}]);
+
+
+
+angular.module("ToDoApp").controller("ChatController", ["$rootScope", "$scope",
+	function($rootScope, $scope) {
+		$scope.onlineUsers = [{
+			username : "Bret"
+		},
+		{
+			username : "Anand Mohan"
+		}];
+
+
+		$scope.openChatWindows = [{
+			newMessage : "",
+			title : "Anand Mohan",
+			minimized : false,
+			messages : [ {
+				message : "that mongodb thing looks good, huh? tiny master db, and huge document store",
+				time : new Date(),
+				sender: {
+					username : "Anand Mohan",
+					avatar : "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+				}
+			},{
+				message : "that mongodb thing looks good, huh? tiny master db, and huge document store",
+				time : new Date(),
+				sender: {
+					username : "Bret",
+					avatar : "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+				}
+			}]
+		}];
+
+
+		$scope.newChat = function(user) {
+			$scope.openChatWindows.push({
+				title : user.username,
+				messages : []
+			})
+		};
+
+		$scope.toggleChatWindow = function(chatWindow) {
+			chatWindow.minimized = !chatWindow.minimized;
+		};
+
+		$scope.closeChatWindow = function(chatWindow) {
+			var index = $scope.openChatWindows.indexOf(chatWindow);
+			$scope.openChatWindows.splice(index, 1);
+		};
+
+		$scope.postMessage = function(chatWindow) {
+			chatWindow.messages.push({
+				message : chatWindow.newMessage,
+				time : new Date(),
+				sender : {
+					username : $rootScope.globals.authenticatedUser.username,
+					avatar : "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+				}
+			});
+
+			chatWindow.newMessage = "";
+		}
+
+	}]);

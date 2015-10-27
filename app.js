@@ -4,6 +4,9 @@ var jade = require("jade");
 var index = require(path.join(__dirname, "./routes/index.js"));
 var pages = require(path.join(__dirname, "./routes/pages.js"));
 var ais = require(path.join(__dirname, "./routes/ais.js"));
+var heartbeat = require(path.join(__dirname, "./routes/heartbeat.js"));
+var chat = require(path.join(__dirname, "./routes/chat.js"));
+
 /*var mongoose = require("mongoose");
 
 var dbConfig = require(path.join(__dirname, "./config/config.js")).dev.db;
@@ -52,6 +55,10 @@ app.use("", index);
 app.use("/pages", pages);
 
 app.use("/ais", ais);
+
+app.use("/heartbeat", heartbeat);
+
+app.use("/chat", chat);
 
 
 

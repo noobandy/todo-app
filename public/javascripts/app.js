@@ -35,33 +35,41 @@ ToDoApp.run(["$rootScope", "AuthenticationManager","$state","editableOptions",
 	function($rootScope, AuthenticationManager, $state,editableOptions) {
 		editableOptions.theme = "bs3";
 		//
-		$rootScope.globals = {};
+		$rootScope.globals = {
+			heartBeatConfig : {
+				url : "/heartbeat",
+				method: "GET",
+				params : {
+					user : null
+				},
+				interval: 60000
+			}
+		};
+
 		if(AuthenticationManager.isAuthenticated()) {
 			$rootScope.globals.isAuthenticated = true;
 
 			$rootScope.globals.authenticatedUser = AuthenticationManager.authenticatedUser();
+			$rootScope.globals.heartBeatConfig.params.user =  AuthenticationManager.authenticatedUser().username;
 		} else {
 			$rootScope.globals.isAuthenticated = false;
 
 			$rootScope.globals.authenticatedUser = null;
+			$rootScope.globals.heartBeatConfig.params.user =  null;
 		}
 
 		$rootScope.$on("$authSuccess", function(event, data) {
 			$rootScope.globals.isAuthenticated = true;
 
 			$rootScope.globals.authenticatedUser = data.authenticatedUser;
-		});
-
-		$rootScope.$on("$authFailed", function() {
-			$rootScope.globals.isAuthenticated = false;
-
-			$rootScope.globals.authenticatedUser = null;
+			$rootScope.globals.heartBeatConfig.params.user =  AuthenticationManager.authenticatedUser().username;
 		});
 
 		$rootScope.$on("$authCleared", function() {
 			$rootScope.globals.isAuthenticated = false;
 
 			$rootScope.globals.authenticatedUser = null;
+			$rootScope.globals.heartBeatConfig.params.user =  null;
 		});
 
 		$rootScope.$on("$stateChangeStart",

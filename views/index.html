@@ -7,6 +7,7 @@
   <link rel="stylesheet" type="text/css" href="/public/stylesheets/style.css">
   <link rel="stylesheet" type="text/css" href="/bower_components/angular-loading-bar/build/loading-bar.css">
   <link rel="stylesheet" type="text/css" href="/bower_components/angular-xeditable/dist/css/xeditable.css">
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/chat.css">
   <!-- endbuild -->
 
   <!-- build:js js/todo-app.js -->
@@ -32,6 +33,9 @@
 	
 </head>
 <body data-ng-app="ToDoApp">
+  <data-ng-if="globals.isAuthenticated">
+    <data-to-do-heart-beat data-config="globals.heartBeatConfig">
+  </data-ng-if>
 	<nav data-ng-controller="NavbarController" class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -70,8 +74,76 @@
 	<div class="row" data-ui-view>
 			
 	</div>
- <!--  <to-do-elevator>
-  </to-do-elevator> -->
+  <div data-ng-controller="ChatController">
+    <div class="row chat-window col-xs-5 col-md-3" data-ng-repeat="chatWindow in openChatWindows">
+      <div class="col-xs-12 col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading top-bar">
+              <div class="col-md-8 col-xs-8">
+                <h3 class="panel-title">
+                  <span class="glyphicon glyphicon-comment"></span> {{chatWindow.title}}
+                </h3>
+              </div>
+              <div class="col-md-4 col-xs-4" style="text-align: right;">
+                <a data-ng-click="toggleChatWindow(chatWindow)" href="#">
+                  <span class="glyphicon icon_minim" data-ng-class="{'glyphicon-plus' : chatWindow.minimized, 'glyphicon-minus' : !chatWindow.minimized}"></span>
+                </a>
+                <a data-ng-click="closeChatWindow(chatWindow)" href="#">
+                  <span class="glyphicon glyphicon-remove icon_close"></span>
+                </a>
+              </div>
+            </div>
+            <div ng-if="!chatWindow.minimized" class="panel-body msg_container_base">
+              <div data-ng-repeat="message in chatWindow.messages">
+                <div data-ng-if="globals.authenticatedUser.username == message.sender.username" class="row msg_container base_sent">
+                  <div class="col-md-10 col-xs-10">
+                    <div class="messages msg_sent">
+                      <p data-ng-bind="message.message">
+                        
+                      </p>
+                      <time data-ng-bind="message.time | date: 'short'"></time>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-xs-2 avatar">
+                    <img data-ng-src="{{message.sender.avatar}}" class="img-responsive"/>
+                  </div>
+                </div>
+                <div data-ng-if="globals.authenticatedUser.username != message.sender.username" class="row msg_container base_receive">
+                  <div class="col-md-2 col-xs-2 avatar">
+                    <img data-ng-src="{{message.sender.avatar}}" class="img-responsive"/>
+                  </div>
+                  <div class="col-md-10 col-xs-10">
+                    <div class="messages msg_receive">
+                      <p data-ng-bind="message.message">
+                      </p>
+                       <time data-ng-bind="message.time | date:'short'"></time>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel-footer">
+              <div class="input-group">
+                <input ng-model="chatWindow.newMessage" to-do-enter="postMessage(chatWindow)" data-ng-focus="chatWindow.minimized && toggleChatWindow(chatWindow)" type="text" class="form-control input-lg" placeholder="Write your message here..." />
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- Online users dropup-->
+    <div class="btn-group dropup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-comment"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li data-ng-repeat="user in onlineUsers">
+              <a data-ng-click="newChat(user)" href="#" data-ng-bind="user.username">
+              </a>
+            </li>
+        </ul>
+    </div>
+  </div>
 </div>	
 </body>
 </html>
