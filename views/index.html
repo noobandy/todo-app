@@ -93,7 +93,7 @@
                 </a>
               </div>
             </div>
-            <div ng-if="!chatWindow.minimized" class="panel-body msg_container_base">
+            <div data-ng-show="!chatWindow.minimized" class="panel-body msg_container_base">
               <div data-ng-repeat="message in chatWindow.messages">
                 <div data-ng-if="globals.authenticatedUser.username == message.sender.username" class="row msg_container base_sent">
                   <div class="col-md-10 col-xs-10">
