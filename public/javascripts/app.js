@@ -4,10 +4,9 @@
 var ToDoApp = angular.module("ToDoApp",["ngResource","ui.router","LocalStorageModule","xeditable",
 	"pascalprecht.translate", "angular-loading-bar"]);
 
-ToDoApp.config(["localStorageServiceProvider","$httpProvider",
-	function(localStorageServiceProvider, $httpProvider) {
+ToDoApp.config(["localStorageServiceProvider",
+	function(localStorageServiceProvider) {
 		localStorageServiceProvider.setPrefix("ToDoApp");
-		$httpProvider.interceptors.push("ServerErrorInterceptor");
 	}]);
 
 

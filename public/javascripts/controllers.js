@@ -20,7 +20,6 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 
 		$scope.run = function() {
 			NLCommandService.getState($scope.command).then(function(response) {
-				console.log(response);
 				$state.go(response.data);
 				$scope.command = "";
 			}, function(error) {
@@ -33,7 +32,6 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 			var recognition = new webkitSpeechRecognition();
 			recognition.lang = "en-GB";
 			recognition.onresult = function(event) { 
-				console.log(event.results[event.resultIndex][event.resultIndex].transcript);
 				$scope.command = event.results[event.resultIndex][event.resultIndex].transcript;
 				$scope.$apply();
 				//introduce 1 sec delay so that user can see what he said
@@ -44,8 +42,6 @@ angular.module("ToDoApp").controller("NavbarController", ["$rootScope",
 			}
 			recognition.start();
 		}
-
-
 		
 	}]);
 
@@ -98,75 +94,5 @@ angular.module("ToDoApp").controller("ToDoController", ["$rootScope", "$scope", 
 			$scope.todos.splice(index, 1);   
 			todo.$delete();
 		};
-
-	}]);
-
-
-
-angular.module("ToDoApp").controller("ChatController", ["$rootScope", "$scope",
-	function($rootScope, $scope) {
-		$scope.onlineUsers = [{
-			username : "Bret"
-		},
-		{
-			username : "Anand Mohan"
-		}];
-
-
-		$scope.openChatWindows = [{
-			newMessage : "",
-			title : "Anand Mohan",
-			minimized : false,
-			messages : [ {
-				message : "that mongodb thing looks good, huh? tiny master db, and huge document store",
-				time : new Date(),
-				sender: {
-					username : "Anand Mohan",
-					avatar : "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-				}
-			},{
-				message : "that mongodb thing looks good, huh? tiny master db, and huge document store",
-				time : new Date(),
-				sender: {
-					username : "Bret",
-					avatar : "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-				}
-			}]
-		}];
-
-
-		$scope.newChat = function(user) {
-			//clear
-			$scope.openChatWindows = [];
-			$scope.openChatWindows.push({
-				title : user.username,
-				messages : []
-			})
-		};
-
-		$scope.toggleChatWindow = function(chatWindow) {
-			chatWindow.minimized = !chatWindow.minimized;
-		};
-
-		$scope.closeChatWindow = function(chatWindow) {
-		/*	var index = $scope.openChatWindows.indexOf(chatWindow);
-			$scope.openChatWindows.splice(index, 1);*/
-			//clear
-			$scope.openChatWindows = [];
-			
-		};
-
-		$scope.postMessage = function(chatWindow) {
-			chatWindow.messages.push({
-				message : chatWindow.newMessage,
-				time : new Date(),
-				sender : {
-					username : $rootScope.globals.authenticatedUser.username,
-					avatar : "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-				}
-			});
-
-			chatWindow.newMessage = "";
-		}
 
 	}]);
