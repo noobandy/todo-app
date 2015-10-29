@@ -41,13 +41,51 @@
       _build : function(){
         //empty
         this.$element.empty();
+
+        var that = this;
+        
         var status = typeof this.options.userStatus.status === "undefined" || 
         this.options.userStatus.status === "" ? this.options.defaultStatus : this.options.userStatus.status;
-        var that = this;
-        this.$element.append($('<blockquote />').html(status).append(" ").append($('<a/>').attr("href","#").append($('<i/>').addClass("glyphicon glyphicon-edit")).on("click", function(e) {
+
+        function displayBlock(){
+          return $('<blockquote />').html(status).append(" ").append($('<a/>').attr("href","#").append($('<i/>').addClass("glyphicon glyphicon-edit")).on("click", function(e) {
           e.preventDefault();
           that.$element.find("blockquote").fadeOut(0, function(){
-            that.$element.append($('<form/>').append($('<div/>').addClass("form-group").append($('<label/>').addClass("form-label").html("Status")).append($('<input/>').addClass("form-control").val(status))).append($('<div/>').addClass("form-control").append($('<button/>').attr("type", "submit").addClass("btn btn-success").html("Update Status").on("click", function(e) {
+            that.$element.append(updateForm());
+          });
+          
+        }));
+        }
+
+        function charLeftMessage(charLeft){
+          switch(charLeft){
+            case 0: 
+              return "No more characters left.";
+            case 1:
+              return "Only one more character left.";
+            default:
+              return charLeft + " " + "more characters left.";
+          }
+        }
+
+        function updateCharLeftMessage(){
+          var charLeft = that.options.maxLength - status.length;
+         
+          if(charLeft < 0) {
+            var input = that.$element.find("form").find("input");
+            input.val(input.val().substr(0, that.options.maxLength));
+            charLeft = 0;
+          }
+          var message = charLeftMessage(charLeft);
+          that.$element.find("form").find("span").html(message);
+        }
+
+        function updateForm(){
+          var charLeft = that.options.maxLength - status.length;
+
+          return $('<form/>').append($('<div/>').addClass("form-group").append($('<label/>').addClass("form-label").html("Status")).append($('<input/>').addClass("form-control").val(status).on("keydown keyup", function(e){
+            updateCharLeftMessage();
+          })).append($('<span/>').addClass("help-block").html(charLeftMessage(charLeft)))).append($('<div/>').addClass("form-control").append($('<button/>').attr("type", "submit").addClass("btn btn-success").html("Update Status").on("click", function(e) {
             e.preventDefault();
             that.options.userStatus.status = that.$element.find("form").find("input").val();
             that._build();
@@ -58,10 +96,11 @@
             that.$element.find("blockquote").fadeIn(0, function(){
               that.$element.find("form").remove();
             });
-          }))));
-          });
-          
-        })));
+          })));
+        }
+        
+        
+        this.$element.append(displayBlock());
       }
     };
 
