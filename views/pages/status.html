@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+	<title>Scratch Pad</title>
+  <!-- build:css css/todo-app.css -->
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/bootstrap.css">
+  <!-- endbuild -->	
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div id="statusWidget" class="col-md-6 col-md-offset-3">
+			
+		</div>
+	</div>
+</div>
+
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+
+  <script type="text/javascript">
+  	var UserStatus = {
+      init : function(options, element) {
+        this.options = $.extend({},this.options, options);
+        this.element = element;
+        this.$element = $(element);
+        this._build();
+      },
+      options : {
+        defaultStatus : "**No Status**",
+        maxLength : 200,
+        userStatus : {
+          mkclIdentificationNumber : "",
+          status : ""
+        },
+        cb : function(userStatus){
+          console.log(userStatus);
+        }
+      },
+      _build : function(){
+        //empty
+        this.$element.empty();
+        var status = typeof this.options.userStatus.status === "undefined" || 
+        this.options.userStatus.status === "" ? this.options.defaultStatus : this.options.userStatus.status;
+        var that = this;
+        this.$element.append($('<blockquote />').html(status).append(" ").append($('<a/>').attr("href","#").append($('<i/>').addClass("glyphicon glyphicon-edit")).on("click", function(e) {
+          e.preventDefault();
+          that.$element.find("blockquote").fadeOut(0, function(){
+            that.$element.append($('<form/>').append($('<div/>').addClass("form-group").append($('<label/>').addClass("form-label").html("Status")).append($('<input/>').addClass("form-control").val(status))).append($('<div/>').addClass("form-control").append($('<button/>').attr("type", "submit").addClass("btn btn-success").html("Update Status").on("click", function(e) {
+            e.preventDefault();
+            that.options.userStatus.status = that.$element.find("form").find("input").val();
+            that._build();
+            that.options.cb(that.options.userStatus);
+
+          })).append(" ").append($('<a/>').attr("href", "#").addClass("btn btn-primary").html("Cancel").on("click", function(e){
+            e.preventDefault();
+            that.$element.find("blockquote").fadeIn(0, function(){
+              that.$element.find("form").remove();
+            });
+          }))));
+          });
+          
+        })));
+      }
+    };
+
+    (function($){
+      $.fn.userStatus = function(options) {
+        if(this.length) {
+          return this.each(function(){
+            var userStatus = Object.create(UserStatus);
+            userStatus.init(options, this);
+            $.data(this, "userStatus", userStatus);
+          });
+        }
+      }
+    })(jQuery);
+
+    $(document).ready(function(){
+      $("#statusWidget").userStatus({
+        userStatus : {
+          mkclIdentificationNumber : "1",
+          status : "Hey There! i am using Society Management Portal"
+        },
+        cb : function(userStatus) {
+          //replace this with api call
+          console.log("make api call");
+          console.log(userStatus);
+
+        }
+      })
+    });
+  </script>
+</body>
+</html>
