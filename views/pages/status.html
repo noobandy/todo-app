@@ -69,15 +69,15 @@
         }
 
         function updateCharLeftMessage(){
-          var charLeft = that.options.maxLength - status.length;
+          var input = that.$element.find("form").find("input");
+          var charLeft = that.options.maxLength - input.val().length;
          
           if(charLeft < 0) {
-            var input = that.$element.find("form").find("input");
             input.val(input.val().substr(0, that.options.maxLength));
             charLeft = 0;
           }
           var message = charLeftMessage(charLeft);
-          that.$element.find("form").find("span").html(message);
+          that.$element.find("form").find("span").empty().append(message);
         }
 
         function updateForm(){
@@ -85,6 +85,7 @@
 
           return $('<form/>').append($('<div/>').addClass("form-group").append($('<label/>').addClass("form-label").html("Status")).append($('<input/>').addClass("form-control").val(status).on("keydown keyup", function(e){
             updateCharLeftMessage();
+            return true;
           })).append($('<span/>').addClass("help-block").html(charLeftMessage(charLeft)))).append($('<div/>').addClass("form-control").append($('<button/>').attr("type", "submit").addClass("btn btn-success").html("Update Status").on("click", function(e) {
             e.preventDefault();
             that.options.userStatus.status = that.$element.find("form").find("input").val();

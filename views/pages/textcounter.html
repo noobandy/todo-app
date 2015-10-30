@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<title>Scratch Pad</title>
+  <!-- build:css css/todo-app.css -->
+  <link rel="stylesheet" type="text/css" href="/public/stylesheets/bootstrap.css">
+  <!-- endbuild -->	
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<form>
+        <div class="form-group">
+          <div class="form-label">
+            Input
+          </div>
+          <input class="form-control" value="Hello'World"/>
+        </div>
+         <div class="form-group">
+          <div class="form-label">
+            Input
+          </div>
+          <input class="form-control" value="Hello'World"/>
+        </div>
+         <div class="form-group">
+          <div class="form-label">
+            Input
+          </div>
+          <input class="form-control" value="Hello'World"/>
+        </div>
+      </form>
+		</div>
+	</div>
+</div>
+
+  <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+   <script type="text/javascript" src="/public/javascripts/textcounter.js"></script>
+
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("input").mkcl().textCounter({
+        maxLength : 10,
+        cssClass : "help-block",
+        message : function(charLeft, maxLength) {
+          switch(charLeft) {
+            case 0:
+              return "No more characters left.";
+            case 1:
+              return "Only one more character left.";
+            default:
+              return charLeft + " " + "more characters left."     
+          }
+        }
+      }).each(function(){
+        console.log($(this).data("textCounter"));
+      });
+    });
+  </script>
+</body>
+</html>
